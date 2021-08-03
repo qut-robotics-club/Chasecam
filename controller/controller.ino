@@ -65,16 +65,37 @@ void setup() {
 
 void loop() {
 
-  // Switch between Manual or Automatic Camera control
+  // On/OFF
   if (digitalRead(TL) == HIGH)
   {
-    automatic_control();
+    // Switch between Manual or Automatic Camera control
+    if (digitalRead(TR) == HIGH)
+    {
+      automatic_control();
+    }
+    else
+    {
+      manual_control();
+    }
   }
   else
   {
-    manual_control();
+    reset();
   }
+}
 
+void reset()
+{
+  int LY_Values, LX_Values = 90;
+  bool LS_Position = 0;
+  int RY_Values, RX_Values = 90;
+  bool RS_Position = 0;
+  bool S1_Position, S2_Position, S3_Position, S4_Position = 0;
+  bool TL_Position, TR_Position = 0;
+  int PL_Values, PR_Values = 90;
+  bool LLR_Position, LLG_Position, LLB_Position = 0;
+  bool LRR_Position, LRG_Position, LRB_Position = 0;
+  int Pan_Servo, Tilt_Servo = 90;
 }
 
 void manual_control() {
@@ -83,28 +104,28 @@ void manual_control() {
 
 void automatic_control() {
   // Status LED for Camera control
-    digitalWrite(LLR, HIGH);
-    
-    // Reset other LEDs
-    int LEDs[5] = {LLG, LLB, LRR, LRG, LRB};
-    for(int x = 0; x <= 4; x++)
-    {
-      digitalWrite(LEDs[x], LOW);
-    }
+  digitalWrite(LLR, HIGH);
+  
+  // Reset other LEDs
+  int LEDs[5] = {LLG, LLB, LRR, LRG, LRB};
+  for(int x = 0; x <= 4; x++)
+  {
+    digitalWrite(LEDs[x], LOW);
+  }
 
-    // Steering and throttle adjustments
-    PL_Values = map(analogRead(PL), 0, 1023, -50, 50);
-    PR_Values = map(analogRead(PR), 0, 1023, 0, 180);
+  // Steering and throttle adjustments
+  PL_Values = map(analogRead(PL), 0, 1023, -50, 50);
+  PR_Values = map(analogRead(PR), 0, 1023, 0, 180);
 
-    // Collect and Map joystick values to be used for car control
-    LY_Values = map(analogRead(LY), 0, 1023, 0, 180) + PL_Values;
-    RX_Values = map(analogRead(RX), 0, 1023, 0+PR_Values, 180-PR_Values);
+  // Collect and Map joystick values to be used for car control
+  LY_Values = map(analogRead(LY), 0, 1023, 0, 180) + PL_Values;
+  RX_Values = map(analogRead(RX), 0, 1023, 0+PR_Values, 180-PR_Values);
 
-    // Reset Pan/Tilt Servo Positions
-    if (digitalRead(S1) == HIGH)
-    {
-      Pan_Servo = 90;
-      Tilt_Servo = 90;
-      digitalWrite(LLG, HIGH);
-    }
+  // Reset Pan/Tilt Servo Positions
+  if (digitalRead(S1) == HIGH)
+  {
+    Pan_Servo = 90;
+    Tilt_Servo = 90;
+    digitalWrite(LLG, HIGH);
+  }
 }
