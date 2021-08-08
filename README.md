@@ -1,5 +1,5 @@
 # QUT Robotics Club
-This is the code and graphics for the **QUT Robotics Club** Chasecam Project created in 2021.
+This is the code and hardware files (to be added) for the **QUT Robotics Club** Chasecam Project created in 2021.
 
 # Who Are We 
 The **QUT Robotics Club** is a student run organisation dedicated to promoting robotics within the QUT community and supporting QUT students’ future in Robotics.
